@@ -1,0 +1,14 @@
+﻿<h1>Upload CSV File</h1>
+
+@using (Html.BeginForm("UploadFile", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <label for="file">Select CSV File:</label>
+        <input type="file" id="fileInput" />
+        <button id="uploadButton">Upload</button>
+
+     </div>
+}
+
+<p>@ViewBag.Message</p>
+

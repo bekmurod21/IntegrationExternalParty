@@ -1,0 +1,74 @@
+﻿@using IntegrationExternalParty.Domain.Entities;
+
+@model IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#employeeTable').DataTable({
+            "order": [[2, "asc"]], // Sort by the third column (Last Name) in ascending order
+            "searching": true,     // Enable searching
+            "paging": true,        // Enable pagination
+            // Add other DataTables options as needed
+        });
+    });
+</script>
+
+<h1>Employee List</h1>
+
+@using (Html.BeginForm("UploadFile", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="file">Select CSV File:</label>
+        <input type="file" name="file" id="file" class="form-control-file" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+}
+
+<p>@ViewBag.Message</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Payroll Number</th>
+            <th>First Name</th>
+            <th><a href="@Url.Action("Index", new { sortOrder = "surname_asc" })">Surname</a></th>
+            <th>Birth Of Date</th>
+            <th>Telephone</th>
+            <th>Mobile Phone</th>
+            <th>Address</th>
+            <th>Address2</th>
+            <th>Postcode</th>
+            <th>Email</th>
+            <th>Start Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.PayrollNumber</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.BirthOfDate</td>
+                <td>@employee.Telephone</td>
+                <td>@employee.Mobile</td>
+                <td>@employee.Address</td>
+                <td>@employee.Address2</td>
+                <td>@employee.PostCode</td>
+                <td>@employee.Email</td>
+                <td>@employee.StartDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
