@@ -1,0 +1,32 @@
+﻿@model IEnumerable<IntegrationExternalParty.Domain.Entities.Product>
+@{
+    ViewBag.Title = "Import Products";
+}
+<h2>Import Products</h2>
+<form action="/Product/Import" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
+</form>
+@if (Model != null && Model.Any())
+{
+    <h3>Imported Products</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
